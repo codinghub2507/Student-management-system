@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 @RestController
 @RequestMapping("/student")
 @CrossOrigin("*")
@@ -20,5 +23,17 @@ public class StudentController {
 
             return student;
 
+    }
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    @GetMapping("/count")
+    public int countStudents(){
+        String sql ="SELECT COUNT(*) FROM Students";
+                return jdbcTemplate.queryForObject(
+                sql,
+                Integer.class
+                );
     }
 }
