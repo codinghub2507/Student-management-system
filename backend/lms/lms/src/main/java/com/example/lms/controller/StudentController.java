@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.example.lms.service.StudentService;
 
 @RestController
 @RequestMapping("/student")
@@ -28,6 +29,9 @@ public class StudentController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private StudentService service;
+
     @GetMapping("/count")
     public int countStudents(){
         String sql ="SELECT COUNT(*) FROM Students";
@@ -35,5 +39,10 @@ public class StudentController {
                 sql,
                 Integer.class
                 );
+    }
+
+    @GetMapping("/message")
+    public String getMessage(){
+        return service.getMessage();
     }
 }
