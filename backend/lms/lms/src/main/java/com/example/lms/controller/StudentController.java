@@ -26,19 +26,14 @@ public class StudentController {
 
     }
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
     @Autowired
     private StudentService service;
 
     @GetMapping("/count")
-    public int countStudents(){
-        String sql ="SELECT COUNT(*) FROM Students";
-                return jdbcTemplate.queryForObject(
-                sql,
-                Integer.class
-                );
+    public String getStudentCount(){
+        return service.getStudentCount();
+
     }
 
     @GetMapping("/message")
