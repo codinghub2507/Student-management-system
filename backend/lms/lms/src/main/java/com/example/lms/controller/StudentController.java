@@ -1,5 +1,7 @@
 package com.example.lms.controller;
 
+import com.example.lms.dto.StudentRequestDTO;
+import com.example.lms.dto.StudentResponseDTO;
 import com.example.lms.model.Student;
 // import java.util.ArrayList;
 
@@ -7,9 +9,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
 import com.example.lms.service.StudentService;
 import java.util.List;
 
@@ -43,9 +48,27 @@ public class StudentController {
         return service.getAllStudents();
     }
 
-    @PostMapping
-public Student addStudent(@RequestBody Student student) {
-    return service.saveStudent(student);
-}
+//     @PostMapping
+// public Student addStudent(@RequestBody Student student) {
+//     return service.saveStudent(student);
+// }
 
+@GetMapping("/{id}")
+public ResponseEntity<?> getStudent(@PathVariable("id")Integer id){
+Student student =service.getStudentById(id);
+
+StudentResponseDTO responseDTO= new StudentResponseDTO(
+    student.getId(),
+    student.getName(),
+    student.getCourse()
+);
+return ResponseEntity.ok(responseDTO);
+}
+@PostMapping
+public ResponseEntity<?> addStudent(@RequestBody StudentRequestDTO dto) {
+
+    Student student = service.addStudent(dto);
+
+    return ResponseEntity.ok(student);
+}
 }
