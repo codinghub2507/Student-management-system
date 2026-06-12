@@ -6,17 +6,20 @@ import com.example.lms.model.Student;
 // import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.example.lms.service.StudentService;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
@@ -64,11 +67,23 @@ StudentResponseDTO responseDTO= new StudentResponseDTO(
 );
 return ResponseEntity.ok(responseDTO);
 }
-@PostMapping
+@PostMapping //new will not be there as REST API only support recourse not keywords like that
 public ResponseEntity<?> addStudent(@RequestBody StudentRequestDTO dto) {
 
     Student student = service.addStudent(dto);
 
     return ResponseEntity.ok(student);
+}
+
+@PutMapping("/{id}")
+public ResponseEntity<?> updateStudent(@PathVariable("id") Integer id, @RequestBody StudentRequestDTO dto){
+     return ResponseEntity.ok(
+            service.updateStudent(id,dto)
+);
+}
+@DeleteMapping("/{id}")
+public ResponseEntity<?> deleteStudent(@PathVariable Integer id){
+    return ResponseEntity.ok(Map.of("message:",service.deleteStudent(id))
+    );
 }
 }
