@@ -4,6 +4,8 @@ function App(){
     //{"id":101,"name":"Vasudha","course":"CSE"}
     const [students,setStudents]=useState([]);
     const [count,setCount]=useState(0);
+    const [username,setUsername]= useState("");
+    const [password,setPassword]= useState("");
 
     const getStudentData =async()=>{
         const response=await fetch('http://localhost:8080/student');
@@ -15,6 +17,23 @@ function App(){
         const data= await response.json();
         setCount(data);
 
+    };
+
+
+    const login = async()=> {
+        const response =await fetch("http://localhost:8080/auth/login",
+            {
+                method:"POST",
+                hearders:{
+                    "Content-Type":
+                    "application/json"
+                },
+                body:JSON.stringify({
+                    username,password,
+                }),
+            }
+        );
+        alert("Login Successfully");
     };
     return(
         <div>
@@ -33,6 +52,17 @@ function App(){
                 Get Total Student Count
             </button>
             <p>Total students: {count}</p>
+
+            <input
+            placeholder="Enter Username"
+            onChange={(e)=> setUsername(e.target.value)}/> 
+
+            <input
+            placeholder="Enter Password"
+            onChange={(e)=> setPassword(e.target.value)}/>
+
+            <button onClick={login}>Login</button>
+
         </div>
     );
 }

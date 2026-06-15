@@ -25,8 +25,8 @@ public class StudentResponseDTO {
     public void setName(String name){
         this.name=name;
     }
-    public String getCourse(){
-        return course;
+     public String getCourse(){
+         return course;
     }
     public void setCourse(String course){
         this.course=course;

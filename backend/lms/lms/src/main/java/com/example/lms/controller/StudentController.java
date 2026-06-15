@@ -77,9 +77,14 @@ public ResponseEntity<?> addStudent(@RequestBody StudentRequestDTO dto) {
 
 @PutMapping("/{id}")
 public ResponseEntity<?> updateStudent(@PathVariable("id") Integer id, @RequestBody StudentRequestDTO dto){
-     return ResponseEntity.ok(
-            service.updateStudent(id,dto)
-);
+    Student student=service.updateStudent(id,dto);
+
+    StudentResponseDTO responseDTO= new StudentResponseDTO(
+        student.getId(),
+        student.getName(),
+        student.getCourse()
+    );
+    return ResponseEntity.ok(responseDTO);
 }
 @DeleteMapping("/{id}")
 public ResponseEntity<?> deleteStudent(@PathVariable Integer id){

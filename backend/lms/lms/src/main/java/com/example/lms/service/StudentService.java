@@ -61,7 +61,7 @@ public Student updateStudent(Integer id, StudentRequestDTO dto){
     .orElseThrow(() -> new StudentNotFoundException("Student not found with id: "+id));
 
     student.setName(dto.getName());
-    student.setCourse(dto.getCourse());
+    // student.setCourse(dto.getCourse());
 
     return repository.save(student);
 }
