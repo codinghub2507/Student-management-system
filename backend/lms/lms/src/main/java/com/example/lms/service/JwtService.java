@@ -22,4 +22,26 @@ public class JwtService {
 
         return token;
     }
+
+    public boolean isValid(String token){
+        try{
+            Jwts.parser()
+            .verifyWith(Keys.hmacShaKeyFor(key.getBytes()))
+            .build()
+            .parseSignedClaims(token);
+
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    public String getUsername(String token){
+        return Jwts.parser()
+        .verifyWith(Keys.hmacShaKeyFor(key.getBytes()))
+        .build()
+        .parseSignedClaims(token)
+        .getPayload()
+        .getSubject();
+    } 
 }
